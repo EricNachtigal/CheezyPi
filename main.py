@@ -4,7 +4,7 @@
 
 import time
 import random
-# Commented out as it says its not being called but I dont trust that - ERNA
+# Commented out as it says its not being called but I dont trust that - ERNA  
 # import board
 import usb_hid
 from adafruit_hid.keyboard import Keyboard
@@ -22,6 +22,7 @@ time.sleep(1)  # Sleep to avoid a race condition on some systems
 keyboard = Keyboard(usb_hid.devices)
 keyboard_layout = KeyboardLayoutUS(keyboard)
 
+print("Simulate pressing spacebar at a random interval between 2 and 5 mins")
 # Loop runs indefinately pressing spacebar every 2-5 mins with a randomly timed key
 while 1:
     rdelay = random.randint(120, 300)
