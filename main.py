@@ -1,4 +1,4 @@
-# CheezyPi Version 0.2.0
+# CheezyPi Version 0.2.1
 # 2023 Eric Nachtigal
 # MIT License
 
@@ -55,7 +55,6 @@ def get_temp():
 # Connect to wifi, print mac address, and ping google. Set Static IP variables in the .env file.
 print("Sleep for 10 seconds")
 time.sleep(10)
-led.value = cheese_loop
 try:
     print()
     print("Connecting to WiFi")
@@ -177,6 +176,8 @@ except OSError:
     print("restarting..")
     microcontroller.reset()
 ping_address = ipaddress.ip_address("8.8.4.4")
+
+led.value = cheese_loop
 
 report_clock = time.monotonic() # time.monotonic() holder for serial connection test and reporting
 keypress_clock = time.monotonic() # time.monotonic() holder for the cheese loop
