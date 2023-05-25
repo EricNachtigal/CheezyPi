@@ -47,10 +47,12 @@ def keypress(target_key):
     time.sleep(rpress)
     keyboard.release(target_key)  # ..."Release"!
 
-# Function to get Pico W CPU temp in C
+# Function to get Pico W CPU temp in C !!!Commented out with intention to delete!!!
+'''
 def get_temp():
     temp = microcontroller.cpu.temperature # the cooler CPU is likely closest to ambient temp
     return temp
+'''
 
 # Connect to wifi, print mac address, and ping google. Set Static IP variables in the .env file.
 print("Sleep for 10 seconds")
@@ -72,11 +74,9 @@ try:
 
     pool = socketpool.SocketPool(wifi.radio)
     server = HTTPServer(pool, "/static")
-    temp_test = get_temp()
-    print("Temp Got")
-    unit = "C"
-    # HTML Font
-    font_family = "monospace"
+#   temp_test = get_temp() !!!Commented out with intention to delete!!!
+#   print("Temp Got") !!!Commented out with intention to delete!!!
+#    unit = "C"
 
     #  prints IP address to REPL
     print("My IP address is", wifi.radio.ipv4_address)
@@ -89,6 +89,12 @@ except Exception as e:
     print("Resetting microcontroller in 10 seconds")
     time.sleep(10)
     microcontroller.reset()
+
+# HTML Style
+font_family = "monospace"
+highlight_color = "limegreen"
+text_color = "null"
+background_color = "dimgrey"
 
 #  the HTML script
 #  setup as an f string
@@ -103,9 +109,9 @@ def webpage():
     <meta http-equiv="Content-type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    html{{font-family: {font_family}; background-color: lightgrey;
+    html{{font-family: {font_family}; background-color: {background_color};
     display:inline-block; margin: 0px auto; text-align: center;}}
-      h1{{color: deeppink; padding: 2vh; font-size: 35px;}}
+      h1{{color: {highlight_color}; padding: 2vh; font-size: 35px;}}
       p{{font-size: 1.5rem;}}
       .button{{font-family: {font_family};display: inline-block;
       background-color: black; border: none;
@@ -116,13 +122,11 @@ def webpage():
     </style>
     </head>
     <body>
-    <title>Pico W HTTP Server</title>
-    <h1>Pico W HTTP Server</h1>
+    <title>CheezyPi</title>
+    <h1>CheezyPi</h1>
     <p class="dotted">This is a Pico W running an HTTP server with CircuitPython.</p>
-    <p class="dotted">The current CPU temperature of the Pico W is 
-    <span style="color: deeppink;">{temp_test}°{unit}</span></p>
     <p class="dotted">The keypress loop status is: 
-    <span style="color: deeppink;">{cheese_loop}</span></p>
+    <span style="color: {highlight_color};">{cheese_loop}</span></p>
     <h1>Press selected key with the Pico W with this button:</h1>
     <form accept-charset="utf-8" method="POST">
     <button class="button" name="SPACEBAR" value="SPACEBAR" type="submit">Spacebar</button></a></p></form>
@@ -186,15 +190,15 @@ print("Current delay is %s s" % rdelay)
 
 while True:
     try:
-        #  every 30 seconds, ping server & update temp reading
+        #  every 30 seconds, ping server
         if (report_clock + 30) < time.monotonic():
             if wifi.radio.ping(ping_address) is None:
                 print("lost connection")
             else:
                 print("connected")
             report_clock = time.monotonic()
-            temp_test = get_temp()
-            print("Temperature: %s C" % temp_test)
+#            temp_test = get_temp() !!!Commented out with intention to delete!!!
+#            print("Temperature: %s C" % temp_test) !!!Commented out with intention to delete!!!
             print("Keypress Loop: %s" % cheese_loop)
             if (keypress_clock + rdelay) < time.monotonic():
                 print("Over delay, pending keypress when active")
